@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Site</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .product { border: 1px solid #ddd; padding: 10px; margin: 10px; }
+        .product img { width: 200px; }
+        .product h3 { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+    <div id="product-list"></div>
+
+    <script>
+        // Fetch products from the backend API
+        fetch('http://localhost:8080/api/products')
+            .then(response => response.json())
+            .then(data => {
+                let productList = document.getElementById('product-list');
+                data.forEach(product => {
+                    let productDiv = document.createElement('div');
+                    productDiv.classList.add('product');
+                    productDiv.innerHTML = `
+                        <img src="https://via.placeholder.com/200" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p>$${product.price}</p>
+                    `;
+                    productList.appendChild(productDiv);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    </script>
+</body>
+</html>
